@@ -1,0 +1,20 @@
+body {
+	border: 2px solid black;
+
+}
+
+
+#keyboard_window {
+	
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	
+	width: 150px;
+	height: 150px;
+	
+	border: 2px solid red;
+}
+#keyboard_window:hover {
+	cursor: pointer;
+}
