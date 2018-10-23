@@ -7,13 +7,20 @@ body {
 #keyboard_window {
 	
 	position: fixed;
-	top: 50px;
-	left: 100px;
+	/*top: 50px;
+	left: 100px;*/
+	top: 50%;
+	left: 50%;
 	z-index: 2;
+
+	margin-left: -1cm;
+	margin-top: -1cm;
 	
-	width: 150px;
-	height: 150px;
-	
+	/*width: 150px;
+	height: 150px;*/
+	width: 2cm;
+	height: 2cm;
+
 	border: 2px solid red;
 	
 	pointer-events: none;
@@ -24,5 +31,12 @@ body {
 
 .input {
 	position: fixed;
+	left:50%;
+	top:25px;
+	width: 500px;
+	height: 2cm;
+	margin-left: -250px;
 	z-index: 3;
+	text-align: center;
+	font-size: 24px;
 }
