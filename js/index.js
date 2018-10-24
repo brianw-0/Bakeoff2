@@ -22,7 +22,14 @@ var currentDistanceY = 0;
 
 var previousX = 0;
 var previousY = 0;
-
+//pixels * 2.54 / 96
+var oneCM = 96/2.54;
+var offsetLeft = $(".simple-keyboard").offset().left;
+var offsetTop = $(".simple-keyboard").offset().top;
+var centerOffsetY = $(".simple-keyboard").height()/2 - oneCM;
+var centerOffsetX = $(".simple-keyboard").width()/2 - oneCM;
+$("#keyboard_window").css({left: offsetLeft + centerOffsetX, 
+	top: offsetTop + centerOffsetY});
 
 //Everything here from https://github.com/hodgef/simple-keyboard
 let myKeyboard = new Keyboard({
@@ -66,35 +73,66 @@ zt.bind(windowElement, customSwipe, function(e) {
   var swipe_direction = e.detail.data[0]['currentDirection'];
   var output = "";
   
+  var changeInX = 0;
+  var changeInY = 0;
 
   if (swipe_direction >= 67.5 && swipe_direction < 112.5) {
     console.log("Top");
 	output = "TOP";
+	
+	changeInY = -(oneCM*2);
+	
   } else if (swipe_direction >= 112.5 && swipe_direction < 157.5) {
     console.log("Top left");
 	output = "Top Left";
 	
+	changeInX = -oneCM*2;
+	changeInY = -oneCM*2;
+	
   }else if (swipe_direction >= 157.5 && swipe_direction < 202.5) {
     console.log("Left"); 
 	output = "Left" ;
+	
+	changeInX = -oneCM*2;
+	
   } else if (swipe_direction >= 202.5 && swipe_direction < 247.5) {
     console.log("Bottom left");
 	output = "bottom left";
-  }else if (swipe_direction >= 337.5 && swipe_direction < 22.5) {
+	
+	changeInX = -oneCM*2;
+	changeInY = oneCM*2;
+	
+  }else if ((swipe_direction >= 337.5 && swipe_direction < 360) || (swipe_direction >= 0 && swipe_direction < 22.5)) {
     console.log("Right");
 	output = "Right";
+	
+	changeInX = oneCM*2;
+	
   } else if (swipe_direction >= 22.5 && swipe_direction < 67.5) {
     console.log("Top Right");
 	output = "Top right";
+	
+	changeInX = oneCM*2;
+	changeInY = -oneCM*2;
+	
   } else if (swipe_direction >= 247.5 && swipe_direction < 292.5) {
     console.log("Bottom");
 	output = "Bottom";
+	
+	changeInY = oneCM*2;
+	
   } else if (swipe_direction >= 292.5 && swipe_direction < 337.5) {
     console.log("Bottom right");
 	output = "Bottom Right";
+	
+	changeInX = oneCM*2;
+	changeInY = oneCM*2;
   }
 
   $(".outputstuff").text(output);
+  //offset({top:value,left:value})
+  $(".simple-keyboard").offset({left: changeInX + offsetLeft, 
+	top: changeInY + offsetTop});
 
   //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));
   //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));
