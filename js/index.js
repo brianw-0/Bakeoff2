@@ -1,4 +1,20 @@
-// import my_layout from './my_layout';
+//import { my_layout } from "my_layout";
+
+const my_layout = {
+  'default' : [
+	"A B C", "D E F", "G H I",
+	"J K L", "M N O",
+	"P Q R S", "T U V", "W X Y Z"
+  ],
+  'shift' : [
+    '~ ! @ # $ % ^ & * ) ( _ + {bksp}',
+		'{tab} q w e r t y u i o p { } |',
+		'{lock} a s d f g h j k l : " {enter}',
+		'{shift} z x c v b n m , < > ? {shift}',
+    '.com @ {space}'
+  ]
+}
+
 let Keyboard = window.SimpleKeyboard.default;
 
 var currentDistanceX = 0;
@@ -12,7 +28,7 @@ var previousY = 0;
 let myKeyboard = new Keyboard({
   onChange: input => onChange(input),
   onKeyPress: button => onKeyPress(button),
-  // layout: my_layout
+  layout: my_layout
 });
 
 function onChange(input) {
@@ -43,29 +59,42 @@ console.log("Width: " + windowWidth + " Height: " + windowHeight);
 zt.bind(windowElement, customSwipe, function(e) {
   console.log("swiped/pan on window");
   console.log(e.detail);
-  console.log("left: " + $(".simple-keyboard").position().left + " right: " + $(".simple-keyboard").position().left )
-  $(".simple-keyboard").css({ "z-index": -1 });
+  //console.log("left: " + $(".simple-keyboard").position().left + " right: " + $(".simple-keyboard").position().left )
+  //$(".simple-keyboard").css({ "z-index": -1 });
 
   console.log(e.detail.data[0]['currentDirection'])
-  var swipe_direction = e.detail.data[0]['currentDirection']
+  var swipe_direction = e.detail.data[0]['currentDirection'];
+  var output = "";
+  
 
-  if (swipe_direction >= 0 && swipe_direction < 60) {
-    console.log("Top right");
-    $(".simple-keyboard").css({left: currentDistanceX + distanceX + "px", 
-                              top: currentDistanceY + distanceY + "px"});
-  } else if (swipe_direction >= 60 && swipe_direction < 120) {
+  if (swipe_direction >= 67.5 && swipe_direction < 112.5) {
     console.log("Top");
-  } else if (swipe_direction >= 120 && swipe_direction < 180) {
+	output = "TOP";
+  } else if (swipe_direction >= 112.5 && swipe_direction < 157.5) {
     console.log("Top left");
-  } else if (swipe_direction >= 180 && swipe_direction < 240) {
+	output = "Top Left";
+	
+  }else if (swipe_direction >= 157.5 && swipe_direction < 202.5) {
+    console.log("Left"); 
+	output = "Left" ;
+  } else if (swipe_direction >= 202.5 && swipe_direction < 247.5) {
     console.log("Bottom left");
-  } else if (swipe_direction >= 240 && swipe_direction < 300) {
+	output = "bottom left";
+  }else if (swipe_direction >= 337.5 && swipe_direction < 22.5) {
+    console.log("Right");
+	output = "Right";
+  } else if (swipe_direction >= 22.5 && swipe_direction < 67.5) {
+    console.log("Top Right");
+	output = "Top right";
+  } else if (swipe_direction >= 247.5 && swipe_direction < 292.5) {
     console.log("Bottom");
-  } else {
+	output = "Bottom";
+  } else if (swipe_direction >= 292.5 && swipe_direction < 337.5) {
     console.log("Bottom right");
+	output = "Bottom Right";
   }
 
-
+  $(".outputstuff").text(output);
 
   //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));
   //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));

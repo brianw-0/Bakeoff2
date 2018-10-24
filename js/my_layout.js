@@ -1,4 +1,4 @@
-const my_layout = {
+export const my_layout = {
   'default' : [
     "\u20AC \u3105 \u3109 \u02C7 \u02CB \u3113 \u02CA \u02D9 \u311A \u311E \u3122 \u3126 = {bksp}",
 		"{tab} \u3106 \u310A \u310D \u3110 \u3114 \u3117 \u3127 \u311B \u311F \u3123 [ ] \\",
