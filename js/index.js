@@ -1,3 +1,4 @@
+// import my_layout from './my_layout';
 let Keyboard = window.SimpleKeyboard.default;
 
 var currentDistanceX = 0;
@@ -10,7 +11,8 @@ var previousY = 0;
 //Everything here from https://github.com/hodgef/simple-keyboard
 let myKeyboard = new Keyboard({
   onChange: input => onChange(input),
-  onKeyPress: button => onKeyPress(button)
+  onKeyPress: button => onKeyPress(button),
+  // layout: my_layout
 });
 
 function onChange(input) {
@@ -27,21 +29,44 @@ function onKeyPress(button) {
 
 var zt = new ZingTouch.Region(document.body);
 var windowElement = document.getElementById("keyboard_window");
-var customPan = new ZingTouch.Pan({
-  threshold: 1
+var customSwipe = new ZingTouch.Swipe({
+  // threshold: 1
+  escapeVelocity: 0.05,
+  maxRestTime: 2000
 });
+
 
 var windowWidth = $("#keyboard_window").width();
 var windowHeight = $("#keyboard_window").height();
 console.log("Width: " + windowWidth + " Height: " + windowHeight);
 
-zt.bind(windowElement, customPan, function(e) {
+zt.bind(windowElement, customSwipe, function(e) {
   console.log("swiped/pan on window");
+  console.log(e.detail);
+  console.log("left: " + $(".simple-keyboard").position().left + " right: " + $(".simple-keyboard").position().left )
   $(".simple-keyboard").css({ "z-index": -1 });
 
-  var distance = Math.floor(e.detail.data[0].distanceFromOrigin);
-  var OriginDirection = Math.floor(e.detail.data[0].directionFromOrigin);
-  var currentDirection = Math.floor(e.detail.data[0].currentDirection);
+  console.log(e.detail.data[0]['currentDirection'])
+  var swipe_direction = e.detail.data[0]['currentDirection']
+
+  if (swipe_direction >= 0 && swipe_direction < 60) {
+    console.log("Top right");
+    $(".simple-keyboard").css({left: currentDistanceX + distanceX + "px", 
+                              top: currentDistanceY + distanceY + "px"});
+  } else if (swipe_direction >= 60 && swipe_direction < 120) {
+    console.log("Top");
+  } else if (swipe_direction >= 120 && swipe_direction < 180) {
+    console.log("Top left");
+  } else if (swipe_direction >= 180 && swipe_direction < 240) {
+    console.log("Bottom left");
+  } else if (swipe_direction >= 240 && swipe_direction < 300) {
+    console.log("Bottom");
+  } else {
+    console.log("Bottom right");
+  }
+
+
+
   //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));
   //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));
   
@@ -54,24 +79,24 @@ zt.bind(windowElement, customPan, function(e) {
   //As an example, x-$("#keyboard_window").position().left) gives you the position of the cursor relative to inside the window
   //So (x-$("#keyboard_window").position().left) > windowWidth is checking if the cursor has moved outside the right side of the window
   //And (x-$("#keyboard_window").position().left) < 0 is checking if the cursor has moved outside the left side of the window
-  if((x-$("#keyboard_window").position().left) > windowWidth || (y - $("#keyboard_window").position().top) > windowHeight) {
-	  return;
-  }
-  if((x-$("#keyboard_window").position().left) < 0 || (y - $("#keyboard_window").position().top) < 0) {
-	  return;
-  }
+  // if((x-$("#keyboard_window").position().left) > windowWidth || (y - $("#keyboard_window").position().top) > windowHeight) {
+	 //  return;
+  // }
+  // if((x-$("#keyboard_window").position().left) < 0 || (y - $("#keyboard_window").position().top) < 0) {
+	 //  return;
+  // }
   
-  var distanceX = 0;
-  var distanceY = 0;
+  // var distanceX = 0;
+  // var distanceY = 0;
   
-  distanceX = x - previousX;
-  distanceY = y - previousY;
-  if(Math.abs(distanceX) > 50 || Math.abs(distanceY) > 50)  {
-	  distanceX = 0;
-	  distanceY = 0;
-  }
-  previousX = x;
-  previousY = y;
+  // distanceX = x - previousX;
+  // distanceY = y - previousY;
+  // if(Math.abs(distanceX) > 50 || Math.abs(distanceY) > 50)  {
+	 //  distanceX = 0;
+	 //  distanceY = 0;
+  // }
+  // previousX = x;
+  // previousY = y;
   
   //console.log("X: " + distanceX + " Y: " + distanceY);
   
@@ -85,10 +110,10 @@ zt.bind(windowElement, customPan, function(e) {
   //currentDistanceX += distanceX;
   //currentDistanceY += distanceY;
   
-  $(".simple-keyboard").css({left: currentDistanceX + distanceX + "px", top: currentDistanceY + distanceY + "px"});
+  // $(".simple-keyboard").css({left: currentDistanceX + distanceX + "px", top: currentDistanceY + distanceY + "px"});
   
-  currentDistanceX = $(".simple-keyboard").position().left;
-  currentDistanceY = $(".simple-keyboard").position().top;
+  // currentDistanceX = $(".simple-keyboard").position().left;
+  // currentDistanceY = $(".simple-keyboard").position().top;
   
 });
 
