@@ -82,6 +82,8 @@ zt.bind(windowElement, customSwipe, function(e) {
   console.log(e.detail.data[0]['currentDirection'])
   var swipe_direction = e.detail.data[0]['currentDirection'];
   var output = "";
+  
+  //$("#keyboard_window").show();
 
   if (swipe_direction >= 67.5 && swipe_direction < 112.5) {
     console.log("Top");
@@ -166,11 +168,9 @@ zt.bind(windowElement, customSwipe, function(e) {
   
   
   if(changeInX != 0 || changeInY != 0) {
-	  $(".simple-keyboard").css({"z-index" :1});
 	  $(".simple-keyboard").animate({
 		left: currentKeyboardPositionX + changeInX,
-		top: currentKeyboardPositionY + (-2*oneCM) + changeInY,
-		"z-index": 3
+		top: currentKeyboardPositionY + (-2*oneCM) + changeInY
 	  }, 100, function() {
 		// Animation complete.
 	  });
@@ -228,6 +228,7 @@ zt.bind(windowElement, customSwipe, function(e) {
 });
 
 zt.bind(windowElement, 'tap', function(e) {
+	//$("#keyboard_window").hide();
 	console.log("Tapped on window");
 	//$(".simple-keyboard").css({ "z-index": 1 });
 });
