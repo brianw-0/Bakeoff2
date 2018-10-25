@@ -30,7 +30,7 @@ body {
 	
 	background-color: rgba(0,0,255,0.4);
 	
-	/*pointer-events: none;*/
+	pointer-events: none;
 }
 
 #keyboard_window:hover {

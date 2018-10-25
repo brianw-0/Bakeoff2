@@ -233,4 +233,5 @@ zt.bind(windowElement, customSwipe, function(e) {
 
 zt.bind(windowElement, 'tap', function(e) {
 	$(".outputstuff").text("Tapped on window");
+	//$("#keyboard_window").css({top: "0", left: "0", border: "2px solid white"});
 });
