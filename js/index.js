@@ -58,6 +58,10 @@ function onKeyPress(button) {
 
 //Everything here from https://zingchart.github.io/zingtouch/#docs
 
+$('#keyboard_window').on('touchstart', function(e){
+  e.preventDefault();
+});
+
 var zt = new ZingTouch.Region(document.body);
 var windowElement = document.getElementById("keyboard_window");
 var customSwipe = new ZingTouch.Swipe({
@@ -225,4 +229,8 @@ zt.bind(windowElement, customSwipe, function(e) {
   // currentDistanceX = $(".simple-keyboard").position().left;
   // currentDistanceY = $(".simple-keyboard").position().top;
   
+});
+
+zt.bind(windowElement, 'tap', function(e) {
+	$("outputstuff").text("Tapped on window");
 });
