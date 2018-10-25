@@ -24,7 +24,7 @@ const quadrantLayout = [
 	["P", "Q", "R", "S"],
 	["T", "U", "V", ""],
 	["W", "X", "Y", "Z"],
-	["space", "back", "clr", "back"]
+	["space", "back", "clr", "clr"]
 ]
 
 let Keyboard = window.SimpleKeyboard.default;
@@ -248,6 +248,8 @@ zt.bind(windowElement, customSwipe, function(e) {
 var currentString = "";
 
 zt.bind(windowElement, 'tap', function(e) {
+
+	
 	//$(".outputstuff").text("Tapped on window");
 	var x = e.detail.events[0].x - $("#keyboard_window").offset().left;
 	var y = e.detail.events[0].y - $("#keyboard_window").offset().top;
