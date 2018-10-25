@@ -4,7 +4,7 @@ const my_layout = {
   'default' : [
 	"A B C", "D E F", "G H I",
 	"J K L", "M N O",
-	"P Q R S", "T U V", "W X Y Z", "{space} {back}"
+	"P Q R S", "T U V", "W X Y Z", "spc bkspc"
   ],
   'shift' : [
     '~ ! @ # $ % ^ & * ) ( _ + {bksp}',
@@ -14,6 +14,18 @@ const my_layout = {
     '.com @ {space}'
   ]
 }
+
+const quadrantLayout = [
+	["A", "B", "C", ""],
+	["D", "E", "F", ""],
+	["G", "H", "I", ""],
+	["J", "K", "L", ""],
+	["M", "N", "O", ""],
+	["P", "Q", "R", "S"],
+	["T", "U", "V", ""],
+	["W", "X", "Y", "Z"],
+	["space", "back", "space", "back"]
+]
 
 let Keyboard = window.SimpleKeyboard.default;
 
@@ -75,6 +87,7 @@ var windowHeight = $("#keyboard_window").height();
 console.log("Width: " + windowWidth + " Height: " + windowHeight);
 
 zt.bind(windowElement, customSwipe, function(e) {
+	
   console.log("swiped/pan on window");
   console.log(e.detail);
   //console.log("left: " + $(".simple-keyboard").position().left + " right: " + $(".simple-keyboard").position().left )
@@ -231,7 +244,48 @@ zt.bind(windowElement, customSwipe, function(e) {
   
 });
 
+
+var currentString = "";
+
 zt.bind(windowElement, 'tap', function(e) {
 	$(".outputstuff").text("Tapped on window");
+	var x = e.detail.events[0].x - $("#keyboard_window").offset().left;
+	var y = e.detail.events[0].y - $("#keyboard_window").offset().top;
+	var quadrant = -1;
+	//Checks the four quadrants of the current window box
+	if(x < oneCM) {  //Left side of the window
+		if(y < oneCM) {  //Top of the window
+			quadrant = 0;
+		}
+		else {  //Bottom of window
+			quadrant = 2;
+		}
+	}
+	else {
+		if(y < oneCM) {
+			quadrant = 1;
+		}
+		else {
+			quadrant = 3;
+		}
+	}
+	
+	var sector = $("#keyboard_window").attr("sector");
+	var currentStr = quadrantLayout[sector][quadrant];
+	
+	if(currentStr == "space") {
+		currentString += " ";
+	}
+	else if(currentStr == "back") {
+		currentString = currentString.substring(0, currentString.length-1);
+	}
+	else {
+		currentString += currentStr;
+	}
+	
+	$(".input-box").text(currentString);
+	
+	console.log("X: " + x + " Y: " + y + " Quadrant: " + quadrant);
+	console.log("You just clicked on " + quadrantLayout[sector][quadrant]);
 	//$("#keyboard_window").css({top: "0", left: "0", border: "2px solid white"});
 });
