@@ -226,9 +226,3 @@ zt.bind(windowElement, customSwipe, function(e) {
   // currentDistanceY = $(".simple-keyboard").position().top;
   
 });
-
-zt.bind(windowElement, 'tap', function(e) {
-	//$("#keyboard_window").hide();
-	console.log("Tapped on window");
-	//$(".simple-keyboard").css({ "z-index": 1 });
-});
