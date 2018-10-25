@@ -4,7 +4,7 @@ const my_layout = {
   'default' : [
 	"A B C", "D E F", "G H I",
 	"J K L", "M N O",
-	"P Q R S", "T U V", "W X Y Z", "spc bkspc"
+	"P Q R S", "T U V", "W X Y Z", "spc bkspc clr"
   ],
   'shift' : [
     '~ ! @ # $ % ^ & * ) ( _ + {bksp}',
@@ -24,7 +24,7 @@ const quadrantLayout = [
 	["P", "Q", "R", "S"],
 	["T", "U", "V", ""],
 	["W", "X", "Y", "Z"],
-	["space", "back", "space", "back"]
+	["space", "back", "clr", "back"]
 ]
 
 let Keyboard = window.SimpleKeyboard.default;
@@ -248,7 +248,7 @@ zt.bind(windowElement, customSwipe, function(e) {
 var currentString = "";
 
 zt.bind(windowElement, 'tap', function(e) {
-	$(".outputstuff").text("Tapped on window");
+	//$(".outputstuff").text("Tapped on window");
 	var x = e.detail.events[0].x - $("#keyboard_window").offset().left;
 	var y = e.detail.events[0].y - $("#keyboard_window").offset().top;
 	var quadrant = -1;
@@ -279,11 +279,25 @@ zt.bind(windowElement, 'tap', function(e) {
 	else if(currentStr == "back") {
 		currentString = currentString.substring(0, currentString.length-1);
 	}
+	else if(currentStr == "clr") {
+		currentString = "";
+	}
 	else {
 		currentString += currentStr;
 	}
 	
 	$(".input-box").text(currentString);
+	
+	if(currentStr.length > 0) {
+		$( "#keyboard_window" ).attr( "sector", 4); //Initialize to the center sector
+		
+		$(".simple-keyboard").animate({
+			left: currentKeyboardPositionX,
+			top: currentKeyboardPositionY + (-2*oneCM)
+		  }, 100, function() {
+			// Animation complete.
+		  });
+	}
 	
 	console.log("X: " + x + " Y: " + y + " Quadrant: " + quadrant);
 	console.log("You just clicked on " + quadrantLayout[sector][quadrant]);

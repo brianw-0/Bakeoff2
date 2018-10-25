@@ -10,14 +10,15 @@ body {
 	width: 80%;
 	height: 2em;
 	
-	border: 2px solid blue;
+	border: 2px solid #39CCCC;
+	padding: 0.1em;
+	font-size: 2em;
 }
 .outer-box {
 	position: relative;
 	top: 2cm;
 	width: 10cm;
 	height: 9.5cm;
-	border: 2px solid blue;
 	margin: auto;
 }
 #keyboard_window {
@@ -35,9 +36,8 @@ body {
 	width: 2cm;
 	height: 2cm;
 
-	border: 2px solid red;
-	
-	background-color: rgba(0,0,255,0.4);
+	border: 2px solid #FF4136;
+
 	
 	/*pointer-events: none;*/
 }

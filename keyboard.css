@@ -36,13 +36,15 @@ body,html{margin:0;padding:0}
     -moz-columns: 33.3% 3; /* Firefox */
     columns: 33.3%;
 	
-	border: 2px solid red;
+	
 	
 }
 	
 	.simple-keyboard .hg-row{width: 2cm; 
 							 height: 2cm;
-							 border: 2px solid blue; display:-ms-flexbox;display:flex;
+							 border: 2px solid #39CCCC; 
+							 border-radius: 5px;
+							 display:-ms-flexbox;display:flex;
 								flex-wrap: wrap;
 								-webkit-column-count: 2; /* Chrome, Safari, Opera */
 								-moz-column-count: 2; /* Firefox */
@@ -53,7 +55,7 @@ body,html{margin:0;padding:0}
 	.simple-keyboard.hg-theme-default{background-color:rgba(0,0,0,.1);padding:5px;border-radius:5px}
 	.simple-keyboard.hg-theme-default .hg-button{-webkit-box-shadow:0 0 3px -1px rgba(0,0,0,.3);
 	box-shadow:0 0 3px -1px rgba(0,0,0,.3);
-	height:20px;border-radius:5px;
+	height:0.9cm;border-radius:5px;
 	position: relative; z-index: 2;
 	-webkit-box-sizing:border-box;box-sizing:border-box;padding:2px;background:#fff;border-bottom:1px solid #b5b5b5;cursor:pointer;display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center}
 	.simple-keyboard.hg-theme-default .hg-button:active{background:#e4e4e4}
