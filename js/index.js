@@ -288,7 +288,7 @@ zt.bind(windowElement, 'tap', function(e) {
 		currentString += currentStr;
 	}
 	
-	$(".input-box").text(currentString);
+	$(".input-box").text(currentString + "_");
 	
 	if(currentStr.length > 0) {
 		$( "#keyboard_window" ).attr( "sector", 4); //Initialize to the center sector
