@@ -45,3 +45,12 @@ body {
 	text-align: center;
 	font-size: 24px;
 }
+
+.outputstuff {
+	position: relative;
+	top: 4cm;
+	height: 1em;
+	width: 20em;
+	border: 2px solid green;
+	margin: auto;
+}
