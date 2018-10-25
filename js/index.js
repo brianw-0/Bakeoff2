@@ -57,7 +57,7 @@ function onKeyPress(button) {
 
 
 //Everything here from https://zingchart.github.io/zingtouch/#docs
-
+/*
 var zt = new ZingTouch.Region(document.body);
 var windowElement = document.getElementById("keyboard_window");
 var customSwipe = new ZingTouch.Swipe({
@@ -231,4 +231,4 @@ zt.bind(windowElement, 'tap', function(e) {
 	//$("#keyboard_window").hide();
 	console.log("Tapped on window");
 	//$(".simple-keyboard").css({ "z-index": 1 });
-});
+});*/
