@@ -232,5 +232,5 @@ zt.bind(windowElement, customSwipe, function(e) {
 });
 
 zt.bind(windowElement, 'tap', function(e) {
-	$("outputstuff").text("Tapped on window");
+	$(".outputstuff").text("Tapped on window");
 });
