@@ -28,8 +28,11 @@ body {
 
 	border: 2px solid red;
 	
-	pointer-events: none;
+	background-color: rgba(0,0,255,0.4);
+	
+	/*pointer-events: none;*/
 }
+
 #keyboard_window:hover {
 	cursor: pointer;
 }

@@ -54,6 +54,7 @@ body,html{margin:0;padding:0}
 	.simple-keyboard.hg-theme-default .hg-button{-webkit-box-shadow:0 0 3px -1px rgba(0,0,0,.3);
 	box-shadow:0 0 3px -1px rgba(0,0,0,.3);
 	height:20px;border-radius:5px;
+	position: relative; z-index: 2;
 	-webkit-box-sizing:border-box;box-sizing:border-box;padding:2px;background:#fff;border-bottom:1px solid #b5b5b5;cursor:pointer;display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center}
 	.simple-keyboard.hg-theme-default .hg-button:active{background:#e4e4e4}
 	.simple-keyboard.hg-theme-default.hg-layout-numeric .hg-button{width:33.3%;height:60px;-ms-flex-align:center;align-items:center;display:-ms-flexbox;display:flex;-ms-flex-pack:center;justify-content:center}
