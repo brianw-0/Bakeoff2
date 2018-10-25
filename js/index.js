@@ -4,7 +4,7 @@ const my_layout = {
   'default' : [
 	"A B C", "D E F", "G H I",
 	"J K L", "M N O",
-	"P Q R S", "T U V", "W X Y Z"
+	"P Q R S", "T U V", "W X Y Z", "{space} {back}"
   ],
   'shift' : [
     '~ ! @ # $ % ^ & * ) ( _ + {bksp}',
@@ -24,12 +24,20 @@ var previousX = 0;
 var previousY = 0;
 //pixels * 2.54 / 96
 var oneCM = 96/2.54;
-var offsetLeft = $(".simple-keyboard").offset().left;
-var offsetTop = $(".simple-keyboard").offset().top;
-var centerOffsetY = $(".simple-keyboard").height()/2 - oneCM;
-var centerOffsetX = $(".simple-keyboard").width()/2 - oneCM;
-$("#keyboard_window").css({left: offsetLeft + centerOffsetX, 
-	top: offsetTop + centerOffsetY});
+var offsetLeft = $(".outer-box").position().left;
+var offsetTop = $(".outer-box").position().top;
+
+var currentKeyboardPositionX = $(".simple-keyboard").position().left;
+var currentKeyboardPositionY = $(".simple-keyboard").position().top;
+
+var correctionTop = 5;
+var correctionLeft = -10;
+
+var centerOffsetY = $(".outer-box").height()/2 - oneCM;
+var centerOffsetX = $(".outer-box").width()/2 - oneCM;
+$("#keyboard_window").css({left: centerOffsetX + correctionLeft, 
+	top: centerOffsetY + correctionTop});
+$( "#keyboard_window" ).attr( "sector", 4); //Initialize to the center sector
 
 //Everything here from https://github.com/hodgef/simple-keyboard
 let myKeyboard = new Keyboard({
@@ -58,7 +66,6 @@ var customSwipe = new ZingTouch.Swipe({
   maxRestTime: 2000
 });
 
-
 var windowWidth = $("#keyboard_window").width();
 var windowHeight = $("#keyboard_window").height();
 console.log("Width: " + windowWidth + " Height: " + windowHeight);
@@ -69,18 +76,19 @@ zt.bind(windowElement, customSwipe, function(e) {
   //console.log("left: " + $(".simple-keyboard").position().left + " right: " + $(".simple-keyboard").position().left )
   //$(".simple-keyboard").css({ "z-index": -1 });
 
+  var changeInX = 0;
+  var changeInY = 0;
+  
   console.log(e.detail.data[0]['currentDirection'])
   var swipe_direction = e.detail.data[0]['currentDirection'];
   var output = "";
-  
-  var changeInX = 0;
-  var changeInY = 0;
 
   if (swipe_direction >= 67.5 && swipe_direction < 112.5) {
     console.log("Top");
 	output = "TOP";
 	
 	changeInY = -(oneCM*2);
+	$( "#keyboard_window" ).attr("sector", 7);
 	
   } else if (swipe_direction >= 112.5 && swipe_direction < 157.5) {
     console.log("Top left");
@@ -89,11 +97,15 @@ zt.bind(windowElement, customSwipe, function(e) {
 	changeInX = -oneCM*2;
 	changeInY = -oneCM*2;
 	
+	$( "#keyboard_window" ).attr( "sector", 8);
+	
   }else if (swipe_direction >= 157.5 && swipe_direction < 202.5) {
     console.log("Left"); 
 	output = "Left" ;
 	
 	changeInX = -oneCM*2;
+	
+	$( "#keyboard_window" ).attr( "sector", 5);
 	
   } else if (swipe_direction >= 202.5 && swipe_direction < 247.5) {
     console.log("Bottom left");
@@ -102,11 +114,14 @@ zt.bind(windowElement, customSwipe, function(e) {
 	changeInX = -oneCM*2;
 	changeInY = oneCM*2;
 	
+	$( "#keyboard_window" ).attr( "sector", 2);
+	
   }else if ((swipe_direction >= 337.5 && swipe_direction < 360) || (swipe_direction >= 0 && swipe_direction < 22.5)) {
     console.log("Right");
 	output = "Right";
 	
 	changeInX = oneCM*2;
+	$( "#keyboard_window" ).attr( "sector", 3);
 	
   } else if (swipe_direction >= 22.5 && swipe_direction < 67.5) {
     console.log("Top Right");
@@ -115,11 +130,15 @@ zt.bind(windowElement, customSwipe, function(e) {
 	changeInX = oneCM*2;
 	changeInY = -oneCM*2;
 	
+	$( "#keyboard_window" ).attr( "sector", 6);
+	
   } else if (swipe_direction >= 247.5 && swipe_direction < 292.5) {
     console.log("Bottom");
 	output = "Bottom";
 	
 	changeInY = oneCM*2;
+	
+	$( "#keyboard_window" ).attr( "sector", 1);
 	
   } else if (swipe_direction >= 292.5 && swipe_direction < 337.5) {
     console.log("Bottom right");
@@ -127,12 +146,34 @@ zt.bind(windowElement, customSwipe, function(e) {
 	
 	changeInX = oneCM*2;
 	changeInY = oneCM*2;
+	
+	$( "#keyboard_window" ).attr( "sector", 0);
+  }
+  else {
+	  //$("#keyboard_window").css({left: offsetLeft + centerOffsetX, 
+	//top: offsetTop + centerOffsetY});
   }
 
-  $(".outputstuff").text(output);
+  //$(".outputstuff").text(output);
   //offset({top:value,left:value})
-  $(".simple-keyboard").offset({left: changeInX + offsetLeft, 
-	top: changeInY + offsetTop});
+  //$(".simple-keyboard").offset({left: changeInX + offsetLeft, 
+//	top: changeInY + offsetTop});
+	
+  console.log("Box moved: " + changeInX + "," + changeInY);
+  
+  //var currentX = offsetLeft;
+  //var currentY = offsetTop + -1*oneCM;
+  
+  
+  if(changeInX != 0 || changeInY != 0) {
+	  $(".simple-keyboard").animate({
+		left: currentKeyboardPositionX + changeInX,
+		top: currentKeyboardPositionY + -2*oneCM + changeInY
+	  }, 100, function() {
+		// Animation complete.
+	  });
+  }
+  
 
   //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));
   //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));
@@ -186,5 +227,5 @@ zt.bind(windowElement, customSwipe, function(e) {
 
 zt.bind(windowElement, 'tap', function(e) {
 	console.log("Tapped on window");
-	$(".simple-keyboard").css({ "z-index": 1 });
+	//$(".simple-keyboard").css({ "z-index": 1 });
 });

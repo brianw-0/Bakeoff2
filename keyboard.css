@@ -12,8 +12,8 @@
 body,html{margin:0;padding:0}
 .simple-keyboard{
 	font-family:HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
-	width: 8cm;
-	height: 8cm;
+	width: 7cm;
+	height: 6.5cm;
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	-ms-user-select:none;
@@ -24,12 +24,10 @@ body,html{margin:0;padding:0}
 	-ms-touch-action:manipulation;
 	touch-action:manipulation;
 	
-	margin-top: 1.5cm;
-	
 	position: relative;
-	left: 30%;
-	top: 40%;
-	z-index: -1;
+	top: -0.5cm;
+	left: 1.5cm;
+	z-index: 1;
 	
 	display: flex;
 	flex-direction: row;
@@ -42,10 +40,16 @@ body,html{margin:0;padding:0}
 	
 }
 	
-	.simple-keyboard .hg-row{width: 28%; border: 2px solid blue; display:-ms-flexbox;display:flex; margin: 1.5cm 5px; }
-	.simple-keyboard .hg-row:not(:last-child){margin-bottom:5px}
-	.simple-keyboard .hg-row .hg-button:not(:last-child){margin-right:5px}
-	.simple-keyboard .hg-button{-ms-flex-positive:1;flex-grow:1;cursor:pointer;}.hg-standardBtn{max-width:50%}
+	.simple-keyboard .hg-row{width: 2cm; 
+							 height: 2cm;
+							 border: 2px solid blue; display:-ms-flexbox;display:flex;
+								flex-wrap: wrap;
+								-webkit-column-count: 2; /* Chrome, Safari, Opera */
+								-moz-column-count: 2; /* Firefox */
+								column-count: 2;}
+	.simple-keyboard .hg-row:not(:last-child){}
+	.simple-keyboard .hg-row .hg-button:not(:last-child){}
+	.simple-keyboard .hg-button{-ms-flex-positive:1;flex-grow:1;cursor:pointer;}.hg-standardBtn{width: 1cm;max-width:50%}
 	.simple-keyboard.hg-theme-default{background-color:rgba(0,0,0,.1);padding:5px;border-radius:5px}
 	.simple-keyboard.hg-theme-default .hg-button{-webkit-box-shadow:0 0 3px -1px rgba(0,0,0,.3);
 	box-shadow:0 0 3px -1px rgba(0,0,0,.3);
