@@ -168,7 +168,7 @@ zt.bind(windowElement, customSwipe, function(e) {
   if(changeInX != 0 || changeInY != 0) {
 	  $(".simple-keyboard").animate({
 		left: currentKeyboardPositionX + changeInX,
-		top: currentKeyboardPositionY + -2*oneCM + changeInY
+		top: currentKeyboardPositionY + (-2*oneCM) + changeInY,
 	  }, 100, function() {
 		// Animation complete.
 	  });
