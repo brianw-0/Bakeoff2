@@ -11,6 +11,14 @@
  *
  * Date: 2018-01-20T17:24Z
  */
+ 
+ /*
+	What:  This is the JQuery file
+	Where: https://jquery.com/
+	Why: Instead of linking HTML elements directly, JQuery is an incredibly easier alternative.
+		It includes plenty of commands that simply the process of building an interactive web application.
+ 
+ */
 ( function( global, factory ) {
 
 	"use strict";

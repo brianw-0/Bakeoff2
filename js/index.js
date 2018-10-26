@@ -1,5 +1,5 @@
-//import { my_layout } from "my_layout";
 
+//This is just the layout of the keyboard.  
 const my_layout = {
   'default' : [
 	"A B C", "D E F", "G H I",
@@ -15,6 +15,9 @@ const my_layout = {
   ]
 }
 
+//This is the quadrant representation of the keyboard.
+//For example, if you tap in the top left corner of the window, and you are in quadrant 1,
+// then you have just tapped on 'A'.
 const quadrantLayout = [
 	["A", "B", "C", ""],
 	["D", "E", "F", ""],
@@ -27,31 +30,36 @@ const quadrantLayout = [
 	["space", "back", "clr", "clr"]
 ]
 
+//Initialize keyboard.
 let Keyboard = window.SimpleKeyboard.default;
 
-var currentDistanceX = 0;
-var currentDistanceY = 0;
-
-var previousX = 0;
-var previousY = 0;
-//pixels * 2.54 / 96
+//One centimeter (real dimension from pixels) is approximately this value.
 var oneCM = 96/2.54;
-var offsetLeft = $(".outer-box").position().left;
-var offsetTop = $(".outer-box").position().top;
 
+//This gives the current top left corner position of the keyboard in px.
+//Keeping track of the original position of the keyboard allows us to move the keyboard and then back.
 var currentKeyboardPositionX = $(".simple-keyboard").position().left;
 var currentKeyboardPositionY = $(".simple-keyboard").position().top;
 
+//Just a correction in pixels for where the interactive window should be positioned.
 var correctionTop = 5;
 var correctionLeft = -10;
 
+//Place the interactive window in the center of the keyboard.
 var centerOffsetY = $(".outer-box").height()/2 - oneCM;
 var centerOffsetX = $(".outer-box").width()/2 - oneCM;
 $("#keyboard_window").css({left: centerOffsetX + correctionLeft, 
 	top: centerOffsetY + correctionTop});
 $( "#keyboard_window" ).attr( "sector", 4); //Initialize to the center sector
 
-//Everything here from https://github.com/hodgef/simple-keyboard
+/*
+	What: Initialize default functions for keyboard javascript object.
+	Where: https://github.com/hodgef/simple-keyboard
+	Why: This ensures that clicking on a keyboard object we can 
+		activate some javascript function.  Think of this as a connection to
+		the keyboard js file.
+
+*/
 let myKeyboard = new Keyboard({
   onChange: input => onChange(input),
   onKeyPress: button => onKeyPress(button),
@@ -68,12 +76,17 @@ function onKeyPress(button) {
 }
 
 
-//Everything here from https://zingchart.github.io/zingtouch/#docs
-
+//Our code: Just makes sure that we can click 'through' the window, instead of being blocked by it.
 $('#keyboard_window').on('touchstart', function(e){
   e.preventDefault();
 });
 
+
+/*
+	What: This instantiates a swipe gesture from ZingTouch.
+	Where: https://zingchart.github.io/zingtouch/#docs
+	Why: Initializing the gesture allows us to use it later.
+*/
 var zt = new ZingTouch.Region(document.body);
 var windowElement = document.getElementById("keyboard_window");
 var customSwipe = new ZingTouch.Swipe({
@@ -82,26 +95,30 @@ var customSwipe = new ZingTouch.Swipe({
   maxRestTime: 2000
 });
 
-var windowWidth = $("#keyboard_window").width();
-var windowHeight = $("#keyboard_window").height();
-console.log("Width: " + windowWidth + " Height: " + windowHeight);
 
+/*
+	What: Binds the swipe gesture to the interactive window.
+	Where: https://zingchart.github.io/zingtouch/#docs
+	Why:  Binding the swipe gesture allows us to control what
+		happens whenever the user swipes on the interactive window.
+		The original code allowed us to take data from parameter 'e',
+		but our code extends it to allow for swipe directions, movement of objects, etc.
+
+*/
 zt.bind(windowElement, customSwipe, function(e) {
-	
-  console.log("swiped/pan on window");
-  console.log(e.detail);
-  //console.log("left: " + $(".simple-keyboard").position().left + " right: " + $(".simple-keyboard").position().left )
-  //$(".simple-keyboard").css({ "z-index": -1 });
 
+  //This variable tells us how much to move the interactive window by.
   var changeInX = 0;
   var changeInY = 0;
   
-  console.log(e.detail.data[0]['currentDirection'])
+  //This gives us the direction of the swipe (0 - 359 degrees)
   var swipe_direction = e.detail.data[0]['currentDirection'];
   var output = "";
   
-  //$("#keyboard_window").show();
-
+  //This is all out of order, but essentially these are all 
+  // a bunch of if statements for determining what direction the user has swiped.
+  // That way, we can decide how much to move the interactive box by, as well as
+  // give it the attribute for determine what 'sector' it is in (i.e. we have 9 sectors on the keyboard)
   if (swipe_direction >= 67.5 && swipe_direction < 112.5) {
     console.log("Top");
 	output = "TOP";
@@ -169,21 +186,14 @@ zt.bind(windowElement, customSwipe, function(e) {
 	$( "#keyboard_window" ).attr( "sector", 0);
   }
   else {
-	  //$("#keyboard_window").css({left: offsetLeft + centerOffsetX, 
-	//top: offsetTop + centerOffsetY});
+	//Does nothing.
   }
 
-  //$(".outputstuff").text(output);
-  //offset({top:value,left:value})
-  //$(".simple-keyboard").offset({left: changeInX + offsetLeft, 
-//	top: changeInY + offsetTop});
+
 	
   console.log("Box moved: " + changeInX + "," + changeInY);
   
-  //var currentX = offsetLeft;
-  //var currentY = offsetTop + -1*oneCM;
-  
-  
+  //If we are moving the box, then animate its movement.
   if(changeInX != 0 || changeInY != 0) {
 	  $(".simple-keyboard").animate({
 		left: currentKeyboardPositionX + changeInX,
@@ -192,61 +202,19 @@ zt.bind(windowElement, customSwipe, function(e) {
 		// Animation complete.
 	  });
   }
-  
-
-  //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));
-  //console.log("Origin: " + OriginDirection + " Current: " + currentDirection + " N: " + (currentDirection-OriginDirection));
-  
-  var x = e.detail.events[0].x // - windowElement.style.left;
-  var y = e.detail.events[0].y // - windowElement.style.top;
  
-  
-  //console.log("x: " + (x-$("#keyboard_window").position().left - windowWidth) + " y: " + (y - $("#keyboard_window").position().top - windowHeight));
-  
-  //As an example, x-$("#keyboard_window").position().left) gives you the position of the cursor relative to inside the window
-  //So (x-$("#keyboard_window").position().left) > windowWidth is checking if the cursor has moved outside the right side of the window
-  //And (x-$("#keyboard_window").position().left) < 0 is checking if the cursor has moved outside the left side of the window
-  // if((x-$("#keyboard_window").position().left) > windowWidth || (y - $("#keyboard_window").position().top) > windowHeight) {
-	 //  return;
-  // }
-  // if((x-$("#keyboard_window").position().left) < 0 || (y - $("#keyboard_window").position().top) < 0) {
-	 //  return;
-  // }
-  
-  // var distanceX = 0;
-  // var distanceY = 0;
-  
-  // distanceX = x - previousX;
-  // distanceY = y - previousY;
-  // if(Math.abs(distanceX) > 50 || Math.abs(distanceY) > 50)  {
-	 //  distanceX = 0;
-	 //  distanceY = 0;
-  // }
-  // previousX = x;
-  // previousY = y;
-  
-  //console.log("X: " + distanceX + " Y: " + distanceY);
-  
-  //distanceX = Math.cos(currentDirection) * distance;
-  //distanceY = Math.sin(currentDirection) * distance;
-  //console.log("X: " + distanceX + " Y: " + distanceY);
-  //console.log("C_X: " + currentDistanceX + " C_Y: " + currentDistanceY);
-  
-  //console.log("X: " + currentDistanceX + " Y: " + currentDistanceY);
-  
-  //currentDistanceX += distanceX;
-  //currentDistanceY += distanceY;
-  
-  // $(".simple-keyboard").css({left: currentDistanceX + distanceX + "px", top: currentDistanceY + distanceY + "px"});
-  
-  // currentDistanceX = $(".simple-keyboard").position().left;
-  // currentDistanceY = $(".simple-keyboard").position().top;
   
 });
 
-
+//This is what the current sentence says.
 var currentString = "";
 
+/*
+	Similar to the previous function, we extended the original code
+	to actually provide some functionality when the window is tapped.
+	In this case, we figure out what letter the user wants to press,
+	 and update the top sentence accordingly.
+*/
 zt.bind(windowElement, 'tap', function(e) {
 
 	
@@ -263,7 +231,7 @@ zt.bind(windowElement, 'tap', function(e) {
 			quadrant = 2;
 		}
 	}
-	else {
+	else {  //Right side of window
 		if(y < oneCM) {
 			quadrant = 1;
 		}
@@ -272,7 +240,10 @@ zt.bind(windowElement, 'tap', function(e) {
 		}
 	}
 	
+	//What sector is the current window in?
 	var sector = $("#keyboard_window").attr("sector");
+	
+	//Get the current string represented by this corner of the tapped window.
 	var currentStr = quadrantLayout[sector][quadrant];
 	
 	if(currentStr == "space") {
@@ -290,6 +261,7 @@ zt.bind(windowElement, 'tap', function(e) {
 	
 	$(".input-box").text(currentString + "_");
 	
+	//If the user has clicked on a character or command, then we move the keyboard back to the center.
 	if(currentStr.length > 0) {
 		$( "#keyboard_window" ).attr( "sector", 4); //Initialize to the center sector
 		
@@ -303,5 +275,4 @@ zt.bind(windowElement, 'tap', function(e) {
 	
 	console.log("X: " + x + " Y: " + y + " Quadrant: " + quadrant);
 	console.log("You just clicked on " + quadrantLayout[sector][quadrant]);
-	//$("#keyboard_window").css({top: "0", left: "0", border: "2px solid white"});
 });

@@ -2,13 +2,7 @@
 <head>
   <title>Tiny Keyboard, Fat Fingers</title>
   
-	<!--
-	
-		THIS IS THE JAVASCRIPT SOURCE FOR THE KEYBOARD.  I copied it into keyboard.min.js
-	<script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.min.js"></script>
-	
-	-->  
-	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/zingtouch/1.0.6/zingtouch.js"></script>-->
+	<!-- Include the stylesheets and jquery file -->
 	<script src="js/jquery-3.3.1.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="keyboard.css">
 	<link rel="stylesheet" href="index.css">
@@ -17,9 +11,17 @@
 </head>
 <body>
 
+	<!-- Create the box for containing the current typed sentence. -->
 	  <div class="input-box"></div>
 	  
+	<!-- 
+	
+		Create the outer box for containing the keyboard and the interactive window.
+		Having a parent element makes it easier to position everything inside it.
+	
+	-->
 	  <div class = "outer-box">
+	  
 		  <div id = "keyboard_window">
 		  
 		  </div>
@@ -30,8 +32,8 @@
 		  </div>
 		</div>
 	  
-	<!--<div class = "outputstuff"></div>-->
 
+	<!--Include the necessary js files -->
 	<script src="js/keyboard.min.js"></script>
 	<script src="js/zingtouch.min.js"></script>
 	<script src="js/index.js"></script>

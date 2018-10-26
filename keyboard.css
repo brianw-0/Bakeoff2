@@ -9,6 +9,14 @@
  *   LICENSE file in the root directory of this source tree.
  *   
  */
+
+/*
+	What:  This is the CSS file for the simple keyboard.
+	Where: https://github.com/hodgef/simple-keyboard
+	Why:  An set of HTML elements like this keyboard also needs a corresponding design, which is what this file provides.
+	How:  This just designs different aspects of each object - i.e. height, position, color, etc.
+*/
+
 body,html{margin:0;padding:0}
 .simple-keyboard{
 	font-family:HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
